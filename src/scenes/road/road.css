@@ -1,0 +1,157 @@
+/* Road scene (PMGSY). Uses the shared HUD tokens from hud.css. */
+
+.road__meta {
+  margin-top: 6px;
+}
+
+.road__layer {
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+  text-shadow: none;
+  white-space: nowrap;
+}
+.steps__row.is-active .road__layer {
+  color: var(--cyan);
+}
+.steps__row.road__step--held,
+.steps__row.road__step--held.is-active {
+  color: var(--amber);
+  border-left-color: var(--amber);
+  background: linear-gradient(to right, rgba(255, 179, 71, 0.16), transparent);
+  text-shadow: none;
+}
+
+.road__line {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: #fff;
+  min-height: 3.9em;
+}
+
+/* Detections */
+.road__dets {
+  min-height: 84px;
+}
+.road__det {
+  display: grid;
+  grid-template-columns: 10px 92px 1fr 36px 44px 34px;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 28px;
+  padding: 0 4px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(95, 230, 255, 0.06);
+  color: var(--ice);
+  font-family: var(--sans);
+  text-align: left;
+  cursor: pointer;
+  animation: panel-in 0.35s ease-out both;
+}
+.road__det:hover {
+  background: rgba(31, 96, 192, 0.25);
+}
+.road__det-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+.road__det--amber .road__det-dot {
+  background: var(--amber);
+  box-shadow: 0 0 6px var(--amber);
+}
+.road__det--red .road__det-dot {
+  background: var(--red);
+  box-shadow: 0 0 6px var(--red);
+}
+.road__det-cls {
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+.road__det--amber .road__det-cls {
+  color: var(--amber);
+}
+.road__det--red .road__det-cls {
+  color: var(--red);
+}
+.road__det-ch,
+.road__det-conf {
+  font-size: 0.72rem;
+  color: var(--ice);
+}
+.road__det-conf {
+  text-align: right;
+}
+.road__det-vlm {
+  font-size: 0.68rem;
+  color: var(--ok);
+  text-align: right;
+}
+.road__det .obs__open {
+  text-align: right;
+}
+.road__empty {
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  padding: 6px 4px;
+}
+
+/* Coverage bar with a target tick */
+.road__track {
+  position: relative;
+  height: 5px;
+}
+.road__target {
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 13px;
+  background: var(--ice);
+  box-shadow: 0 0 4px var(--cyan);
+}
+
+.road__note {
+  font-size: 0.82rem;
+}
+
+/* IES record shortcuts */
+.road__recs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.road__rec {
+  padding: 3px 7px;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  color: var(--cyan);
+  background: rgba(31, 96, 192, 0.18);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    opacity 0.3s;
+}
+.road__rec:hover:not(:disabled) {
+  background: rgba(31, 96, 192, 0.45);
+  border-color: var(--line-strong);
+}
+.road__rec:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.road__inspect {
+  margin-top: 8px;
+  width: 100%;
+}

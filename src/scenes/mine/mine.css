@@ -1,0 +1,313 @@
+/* Mine scene panels. */
+.hud > .mine__col {
+  position: absolute;
+  top: 92px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+.mine__col > .panel {
+  pointer-events: auto;
+}
+.mine__col--left {
+  left: 216px;
+}
+.mine__col--right {
+  right: 24px;
+}
+.mine__site {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.mine__place {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+.mine__shift {
+  font-size: 0.72rem;
+  color: var(--dim);
+  margin-top: 2px;
+}
+.mine__site-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mine__clock {
+  font-size: 1.35rem;
+  font-weight: 300;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(95, 230, 255, 0.5);
+}
+.mine__kpis {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 12px 0 4px;
+}
+.mine__kpi-col {
+  flex: 1;
+  min-width: 0;
+}
+.mine__note {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--dim);
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  margin-top: 4px;
+}
+.mine__note--em {
+  color: var(--ice);
+  margin-top: 8px;
+}
+.mine__trips {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+/* Production chart */
+.mine__chart {
+  display: block;
+  margin: 0 0 6px;
+  overflow: visible;
+}
+.mine__chart-grid {
+  stroke: rgba(95, 230, 255, 0.1);
+  stroke-width: 1;
+}
+.mine__chart-axis,
+.mine__chart-label {
+  fill: var(--dim);
+  font-family: var(--mono);
+  font-size: 9px;
+}
+.mine__chart-plan {
+  stroke: rgba(207, 239, 255, 0.45);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.mine__chart-target {
+  stroke: #fff;
+  stroke-width: 1.5;
+}
+.mine__chart-actual {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 1.8;
+  filter: drop-shadow(0 0 3px rgba(95, 230, 255, 0.8));
+}
+.mine__chart-forecast {
+  stroke-width: 1.6;
+  stroke-dasharray: 4 3;
+}
+.mine__chart-forecast.is-miss,
+.mine__chart-dot.is-miss {
+  stroke: var(--amber);
+  fill: var(--amber);
+}
+.mine__chart-forecast.is-ok,
+.mine__chart-dot.is-ok {
+  stroke: var(--ok);
+  fill: var(--ok);
+}
+.mine__chart-now {
+  fill: #fff;
+}
+.mine__forecast {
+  margin-top: 8px;
+  padding: 7px 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  border-left: 2px solid var(--ok);
+  background: rgba(95, 255, 192, 0.06);
+  transition:
+    border-color 0.4s,
+    background 0.4s;
+}
+.mine__forecast.is-miss {
+  border-left-color: var(--amber);
+  background: rgba(255, 179, 71, 0.08);
+}
+.mine__forecast b {
+  color: #fff;
+  font-weight: 500;
+}
+.mine__forecast.is-miss b {
+  color: var(--amber);
+}
+.mine__forecast.is-ok b {
+  color: var(--ok);
+}
+
+/* Loaders */
+.mine__loader + .mine__loader {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.mine__loader-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mine__loader-name {
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.mine__loader-trucks {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+.mine__pips {
+  display: flex;
+  gap: 3px;
+}
+.mine__pips i {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--cyan);
+  background: rgba(95, 230, 255, 0.25);
+}
+.mine__pips i.is-warn {
+  border-color: var(--amber);
+  background: rgba(255, 179, 71, 0.3);
+}
+.mine__loader-stats {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 0 18px;
+  margin-top: 4px;
+}
+.mine__alert {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--amber);
+}
+
+/* Decision */
+.mine__flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  margin-bottom: 10px;
+}
+.mine__flow-step {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.15;
+  padding: 5px 2px;
+  color: var(--dim);
+  border-bottom: 2px solid rgba(95, 230, 255, 0.12);
+}
+.mine__flow-step.is-done {
+  color: var(--ice);
+  border-bottom-color: var(--brand-from);
+}
+.mine__flow-step.is-active {
+  color: #fff;
+  border-bottom-color: var(--cyan);
+  background: rgba(95, 230, 255, 0.08);
+}
+.mine__copy {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ice);
+}
+.mine__copy b {
+  color: #fff;
+}
+.mine__rec {
+  font-size: 1.02rem;
+}
+.mine__outcome-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mine__outcome-head .btn {
+  margin-left: auto;
+}
+.mine__measure {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 3px 8px;
+  margin-top: 8px;
+  align-items: baseline;
+}
+.mine__measure-h {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.mine__measure-k {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.mine__measure-a {
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+.mine__measure-b {
+  font-size: 0.8rem;
+  color: #fff;
+}
+.mine__measure-b.is-good {
+  color: var(--ok);
+}
+.mine__hist {
+  display: flex;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.mine__hist-at {
+  font-size: 0.75rem;
+  color: var(--dim);
+  padding-top: 2px;
+}
+.mine__hist-body {
+  flex: 1;
+  line-height: 1.4;
+}
+.mine__hist-note {
+  display: block;
+  color: var(--dim);
+  font-size: 0.78rem;
+}
+.mine__hist.is-reject .mine__hist-note {
+  color: #ffd9a3;
+}
+
+/* Trip verification */
+.mine__trip-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.mine__records {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 2px;
+}
