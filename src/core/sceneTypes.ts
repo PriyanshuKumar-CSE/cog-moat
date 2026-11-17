@@ -4,7 +4,7 @@ import type { SceneId } from './store'
 
 export interface SceneModule {
   id: SceneId
-  /** Number shown in the scene rail (1-6). */
+  /** Number shown in the scene rail (1-7). */
   index: number
   title: string
   subtitle: string

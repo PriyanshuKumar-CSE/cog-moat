@@ -552,7 +552,7 @@ function Scanner() {
         </mesh>
       </group>
       {/* Sits above the defect labels so the two never collide as the vehicle passes. */}
-      <group position={[0, 2.5, 0]}>
+      <group position={[0, 3.45, 0]}>
         <HoloText fontSize={0.22} variant="hudBold" color={theme.holo.cyan} glow={1.8} billboard>
           PHOTON · SCANNING
         </HoloText>

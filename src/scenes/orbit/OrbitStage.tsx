@@ -32,7 +32,7 @@ const setCursor = (on: boolean) => {
   document.body.style.cursor = on ? 'pointer' : ''
 }
 
-export const domainLabel: Record<string, string> = { road: 'ROAD', mine: 'MINE', water: 'WATER', forest: 'FOREST' }
+export const domainLabel: Record<string, string> = { road: 'ROAD', mine: 'MINE', water: 'WATER', forest: 'FOREST', building: 'BUILDING' }
 
 /** Customer short name for a deployment, or null when hidden or not provided. */
 function useCustomer(d: Deployment) {

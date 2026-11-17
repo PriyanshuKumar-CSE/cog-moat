@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { sceneOrder, useApp } from './store'
 
 /**
- * 1-6 jump to a scene, arrows step, Space toggles autoplay,
+ * 1-7 jump to a scene, arrows step, Space toggles autoplay,
  * H hides HUD, P projector mode, ` presenter panel, Esc closes the inspector.
  */
 export function useKeyboard() {

@@ -1,9 +1,9 @@
 import { create } from 'zustand'
 import { facts, type FactId } from '../config/content'
 
-export type SceneId = 'orbit' | 'road' | 'mine' | 'water' | 'forest' | 'loop'
+export type SceneId = 'orbit' | 'road' | 'mine' | 'water' | 'forest' | 'building' | 'loop'
 
-export const sceneOrder: SceneId[] = ['orbit', 'road', 'mine', 'water', 'forest', 'loop']
+export const sceneOrder: SceneId[] = ['orbit', 'road', 'mine', 'water', 'forest', 'building', 'loop']
 
 export interface TickerItem {
   id: string

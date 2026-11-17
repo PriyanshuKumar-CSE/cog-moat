@@ -215,6 +215,27 @@ const generators: Record<Domain, (rng: Rng) => DomainGen> = {
       derivedClaim: { class: 'nrw_anomaly', confidence: Number(rng.range(0.9, 0.97).toFixed(2)), loss_pct: loss, suspected: 'leak' },
     }
   },
+  building: (rng) => {
+    const level = rng.int(2, 6)
+    return {
+      headline: `RCC slab, level ${level}`,
+      task: `Cast level ${level} slab, M30, as per approved drawings`,
+      planApprover: 'Site Engineer',
+      method: 'slab_verifier@v1',
+      config: { max_plumb_mm: 10, max_level_mm: 10, min_cube_margin_mpa: 4 },
+      sense: { sensor: 'slab_maturity_sensor' },
+      captureKind: 'measurement',
+      captureClaim: { quantity: 'maturity_strength_mpa', value: Number(rng.range(22, 27).toFixed(1)) },
+      derivedKind: 'detection',
+      derivedClaim: {
+        class: 'slab_complete',
+        confidence: Number(rng.range(0.91, 0.98).toFixed(2)),
+        level,
+        max_plumb_mm: rng.int(3, 8),
+        cube_strength_mpa: Number(rng.range(35, 39).toFixed(1)),
+      },
+    }
+  },
   forest: (rng) => ({
     headline: `Thermal hotspot, cell ${String.fromCharCode(65 + rng.int(0, 7))}${rng.int(1, 12)}`,
     task: 'Watch canopy cells for fire and encroachment, dawn pass',

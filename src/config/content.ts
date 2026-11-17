@@ -47,13 +47,16 @@ export const facts = {
   vlmLabel: fact('VLM label', 'VLM verifier'),
   vendorModels: fact('Vendor model names', 'Cosmos Reason 2 (edge 2B / server 8B) · Qwen planner', false),
 
+  // Building scene. A simulated project; no customer or site is named.
+  buildingProject: fact('Building project label', 'Residential tower · B+G+6'),
+
   // Disclosure
   simulatedBadge: fact('Simulated data badge', 'SIMULATED DATA'),
 } satisfies Record<string, Fact>
 
 export type FactId = keyof typeof facts
 
-export type Domain = 'road' | 'mine' | 'water' | 'forest'
+export type Domain = 'road' | 'mine' | 'water' | 'forest' | 'building'
 
 export interface Deployment {
   id: string

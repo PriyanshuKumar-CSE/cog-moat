@@ -1,5 +1,6 @@
 import type { SceneModule } from '../core/sceneTypes'
 import type { SceneId } from '../core/store'
+import { buildingScene } from './building'
 import { forestScene } from './forest'
 import { loopScene } from './loop'
 import { mineScene } from './mine'
@@ -14,5 +15,6 @@ export const scenes: Record<SceneId, SceneModule> = {
   mine: mineScene,
   water: waterScene,
   forest: forestScene,
+  building: buildingScene,
   loop: loopScene,
 }

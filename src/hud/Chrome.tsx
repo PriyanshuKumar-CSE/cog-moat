@@ -107,7 +107,7 @@ export function KeyHints() {
   return (
     <div className="keyhints mono">
       <span>
-        <b>1-6</b> scenes
+        <b>1-{sceneOrder.length}</b> scenes
       </span>
       <span>
         <b>←→</b> step

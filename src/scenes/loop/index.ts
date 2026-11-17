@@ -4,7 +4,7 @@ import { LoopStage } from './LoopStage'
 
 export const loopScene: SceneModule = {
   id: 'loop',
-  index: 6,
+  index: 7,
   title: 'THE LOOP',
   subtitle: 'Intent · Sense · Scheduler decides · Verify · Settle · Learn',
   Stage: LoopStage,

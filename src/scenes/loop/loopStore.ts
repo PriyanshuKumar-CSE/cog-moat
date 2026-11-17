@@ -35,7 +35,7 @@ export const phaseStep: Record<Phase, LoopStepId> = {
   learn: 'learn',
 }
 
-export const domainCycle: Domain[] = ['road', 'mine', 'water', 'forest']
+export const domainCycle: Domain[] = ['road', 'mine', 'water', 'forest', 'building']
 
 export interface Decision {
   action: HumanAction
@@ -110,6 +110,7 @@ function settleWord(domain: Domain, action: HumanAction) {
     mine: 'Trip counted. Contractor payment eligible.',
     water: 'Verified loss written to Water Ledger.',
     forest: 'Incident confirmed. Patrol dispatch recorded.',
+    building: 'Milestone certificate signed. RA bill released.',
   }[domain]
 }
 
@@ -128,6 +129,11 @@ export const approvalCopy: Record<Domain, { title: string; ask: string; modify: 
     title: 'Confirm NRW anomaly',
     ask: 'Night-flow imbalance above threshold. Write verified loss to Water Ledger?',
     modify: [{ id: 'crew', label: 'Send field crew first' }],
+  },
+  building: {
+    title: 'Sign milestone certificate',
+    ask: 'Slab geometry and cube strength meet spec. Sign and release the RA bill?',
+    modify: [{ id: 'cubes', label: 'Hold: re-test cubes' }],
   },
   forest: {
     title: 'Confirm fire incident',
