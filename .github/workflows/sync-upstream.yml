@@ -1,0 +1,29 @@
+name: Sync from Navitas28/cog-moat
+
+on:
+  schedule:
+    - cron: "0 * * * *" # every hour
+  workflow_dispatch: # "Run workflow" button for an instant sync
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge latest changes from the original repo
+        run: |
+          git config user.name "PriyanshuKumar-CSE"
+          git config user.email "221190129+PriyanshuKumar-CSE@users.noreply.github.com"
+          git fetch https://github.com/Navitas28/cog-moat.git main
+          if git merge-base --is-ancestor FETCH_HEAD HEAD; then
+            echo "Already up to date"
+            exit 0
+          fi
+          git merge FETCH_HEAD --no-edit -m "Sync with Navitas28/cog-moat main"
+          git push origin HEAD:main
