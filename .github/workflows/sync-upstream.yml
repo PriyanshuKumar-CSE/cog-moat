@@ -2,7 +2,7 @@ name: Sync from Navitas28/cog-moat
 
 on:
   schedule:
-    - cron: "0 * * * *" # every hour
+    - cron: "17 * * * *" # every hour at :17 (GitHub often skips runs scheduled at :00)
   workflow_dispatch: # "Run workflow" button for an instant sync
 
 permissions:
