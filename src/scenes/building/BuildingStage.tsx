@@ -1,6 +1,6 @@
 import { Billboard } from '@react-three/drei'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { theme } from '../../config/theme'
 import { useApp } from '../../core/store'
@@ -33,6 +33,9 @@ import {
 } from './layout'
 import { builtState, cutY, standingUpTo } from './progress'
 import { MONITORING, stageIndex, stages, type BuildingStageId } from './stages'
+import { useControl } from './control'
+import { controlTick } from './controlDirector'
+import { SiteActivity } from './SiteActivity'
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 const focusPhases = new Set(['plan', 'verify', 'approve'])
@@ -48,6 +51,7 @@ export function BuildingStage() {
     const d = Math.min(dt, 0.1)
     useBuilding.getState().tick(d)
     useShm.getState().sample(d)
+    controlTick(d)
   })
 
   return (
@@ -61,13 +65,23 @@ export function BuildingStage() {
       <LevelLabels />
       <ScanRig />
       <Title />
-      <PlanCallouts />
-      <Findings />
+      <QualityOnly>
+        <PlanCallouts />
+        <Findings />
+      </QualityOnly>
+      <SiteActivity />
       <Sensors />
       <CertificateCard />
       <LedgerRow />
     </>
   )
+}
+
+/** Quality overlays (plan callouts, finding marks) step aside in the Project control lens. */
+function QualityOnly({ children }: { children: ReactNode }) {
+  const quality = useControl((s) => s.lens === 'quality')
+  // Unmounted, not hidden, so the marks cannot be hovered or clicked while away.
+  return quality ? <>{children}</> : null
 }
 
 /* ------------------------------------------------------------------ */

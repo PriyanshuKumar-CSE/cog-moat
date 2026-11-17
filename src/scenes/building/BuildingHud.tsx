@@ -5,16 +5,19 @@ import { Panel } from '../../hud/Panel'
 import { CheckRow, Chip, Divider, KV, Sparkline, Stat } from '../../hud/widgets'
 import type { IesRecord } from '../../sim/ies'
 import { sensorDefs, useBuilding, useShm, type Phase } from './buildingStore'
+import { queriedHours, sitePlan, useControl } from './control'
+import { LensSwitch, LeversPanel, ProgressPanel } from './ControlHud'
 import { inspectBlock, inspectRecord } from './inspect'
 import { MONITORING, builtPct, stages } from './stages'
 
 export function BuildingHud() {
   const phase = useBuilding((s) => s.phase)
+  const control = useControl((s) => s.lens === 'control')
   return (
     <>
       <OverviewPanel />
-      <HealthPanel />
-      <EvidencePanel />
+      {control ? <LeversPanel /> : <HealthPanel />}
+      {control ? <ProgressPanel /> : <EvidencePanel />}
       <CertificatePanel />
       {phase === 'approve' && <Approval />}
     </>
@@ -38,6 +41,7 @@ function OverviewPanel() {
   const c = useBuilding((s) => s.current)
   const jump = useBuilding((s) => s.jump)
   const project = useFact('buildingProject')
+  const control = useControl((s) => s.lens === 'control')
   const monitoring = stage === MONITORING
   const released = outcome === 'released'
   const pct = builtPct(stage) + (released && !monitoring ? stages[stage].weight : 0)
@@ -71,6 +75,7 @@ function OverviewPanel() {
           <KV k="sign-off" v={c.approverRole} mono={false} />
         </div>
       </div>
+      <LensSwitch />
       <Divider label="Foundation to paint, then monitoring" />
       <div className="bld__stages" data-testid="building-stages">
         {stages.map((s, i) => {
@@ -101,9 +106,12 @@ function OverviewPanel() {
           </span>
         ))}
       </div>
-      <div className="bld__line" data-testid="building-line">
-        {line}
-      </div>
+      {/* In the Project control view the levers panel tells the story; the milestone line steps aside to give it room. */}
+      {!control && (
+        <div className="bld__line" data-testid="building-line">
+          {line}
+        </div>
+      )}
     </Panel>
   )
 }
@@ -287,6 +295,7 @@ function CertificatePanel() {
       ? 'On hold. Not settled.'
       : 'Rejected. Not settled.'
   const idValue = entry.payload.certificate?.certificate_id ?? entry.payload.work_order?.work_order_id
+  const hire = ok && !c.monitoring ? sitePlan(c.index)?.hire : undefined
   return (
     <Panel
       title={ok ? (c.monitoring ? 'Inspection work order' : 'Milestone certificate') : 'Decision recorded'}
@@ -302,6 +311,7 @@ function CertificatePanel() {
       <KV k={ok ? 'signed by' : 'decided by'} v={`${c.approverRole}${decision.simulated ? ' (simulated)' : ''}`} mono={false} />
       {decision.action === 'reject' && <KV k="reason code" v={decision.reason ?? '-'} />}
       {decision.action === 'modify' && <KV k="action" v={c.stage.modify.label.toLowerCase()} mono={false} />}
+      {hire && <KV k="hire check" v={`${hire.machine.toLowerCase()} ${hire.worked_h} of ${hire.billed_h} h worked`} mono={false} />}
       <KV k="ledger block" v={`#${entry.block.seq} · ${entry.block.hash.slice(0, 16)}…`} />
       <div className={`event__settle ${ok ? '' : 'is-reject'}`} data-testid="building-outcome">
         <div className="event__settle-title">{statusTitle}</div>
@@ -336,6 +346,7 @@ function Approval() {
     [decide],
   )
   const checks = c.measures.filter((m) => m.ok).length
+  const hire = sitePlan(c.index)?.hire
   return (
     <ApprovalCard decisionKey={c.id} title={c.stage.approveTitle} approverRole={c.approverRole} modifyOptions={[c.stage.modify]} onDecide={onDecide}>
       {c.monitoring ? (
@@ -346,7 +357,8 @@ function Approval() {
       ) : (
         <>
           {c.label}: {checks} of {c.measures.length} plan checks pass ({c.measures[0].label} {c.measures[0].value}, {c.measures[1].label} {c.measures[1].value}).{' '}
-          {c.findings.length} snags logged as work orders. Sign the milestone and release the RA bill?
+          {c.findings.length} snags logged as work orders.
+          {hire && ` ${hire.machine} hire: ${hire.billed_h} h billed, ${hire.worked_h} h seen working, ${queriedHours(hire)} h queried.`} Sign the milestone and release the RA bill?
         </>
       )}
     </ApprovalCard>

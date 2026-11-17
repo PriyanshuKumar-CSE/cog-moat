@@ -50,6 +50,17 @@ export const facts = {
   // Building scene. A simulated project; no customer or site is named.
   buildingProject: fact('Building project label', 'Residential tower · B+G+6'),
 
+  // Project control. Figures from live Cognecto screens (Project Control brochure, 15-17 Nov 2026).
+  pcSource: fact('Project control: source line', 'Live Cognecto screens, 15-17 Nov 2026'),
+  pcProductivity: fact('Project control: productive share', '23% productive share · 1 camera · 30 days'),
+  pcIdle: fact('Project control: idle time', '9h 15m productive, 31h 26m idle across 8 workers'),
+  pcMachine: fact('Project control: machine time', '336 min tractor and trailer working time · 1 camera'),
+  pcDecision: fact('Project control: decision time', '0.02 s average AI decision time per frame'),
+  pcModels: fact('Project control: model count', '27 models ready per site, no retraining'),
+  pcSafety: fact('Project control: safety line', 'PPE and fire alerts from the same models'),
+  pcBoqVerified: fact('Project control: BOQ verified', '₹82 Cr of BOQ verified by Cortex'),
+  pcSavings: fact('Project control: savings table', 'What it saves, reference package'),
+
   // Disclosure
   simulatedBadge: fact('Simulated data badge', 'SIMULATED DATA'),
 } satisfies Record<string, Fact>
@@ -155,6 +166,26 @@ export const layers = [
   { id: 'photon', name: 'Photon', verb: 'see', line: 'Edge detectors, road segmentation, VLM checks.' },
   { id: 'cortex', name: 'Cortex', verb: 'act', line: 'Ontology, site Correlator, Event Ledger.' },
 ] as const
+
+/**
+ * What project control saves, from Cognecto's Project Control brochure.
+ * Deliberately conservative; a 30-day baseline on a real site replaces these assumptions.
+ * Shown only while the `pcSavings` fact is visible.
+ */
+export const savingsReference = {
+  basis: '₹100 Cr package · 24 months · 120 workers',
+  rows: [
+    { lever: 'Material & haulage', basis: '1% of ~₹30 Cr hauled a year', value: '30 L' },
+    { lever: 'Schedule', basis: 'One month of site overheads avoided', value: '25 L' },
+    { lever: 'Rental equipment', basis: '8% of ~₹3 Cr annual hire bills', value: '24 L' },
+    { lever: 'Worker productivity', basis: '10% of ₹2.34 Cr labour', value: '23 L' },
+    { lever: 'Machinery uptime', basis: '10% of ~₹1.2 Cr fleet diesel', value: '12 L' },
+    { lever: 'Attendance', basis: '4% of ₹2.34 Cr labour bill', value: '9 L' },
+    { lever: 'Reporting', basis: '2 manual reporting posts', value: '7 L' },
+  ],
+  total: { line: 'About 1.3% of project value, every year', value: '₹1.3 Cr' },
+  note: 'Deliberately conservative. After 30 days on site, your own baseline replaces these assumptions.',
+} as const
 
 export const phyos = {
   name: 'phyOS',

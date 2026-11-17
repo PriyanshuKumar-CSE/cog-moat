@@ -196,10 +196,12 @@
 /* Structural health rows */
 .bld__shm {
   display: grid;
-  grid-template-columns: 1fr 74px 78px 58px;
+  grid-template-columns: minmax(0, 1fr) 74px 78px 58px;
   align-items: center;
   gap: 8px;
-  height: 30px;
+  /* Rows grow when labels wrap (projector mode) instead of overlapping the next row. */
+  min-height: 30px;
+  padding: 1px 0;
   border-bottom: 1px solid rgba(95, 230, 255, 0.06);
 }
 .bld__shm-label {
@@ -242,4 +244,312 @@
 .bld__shm.is-alert .bld__shm-label,
 .bld__shm.is-alert .bld__shm-v {
   color: var(--amber);
+}
+
+/* View switch: quality and sign-off, or project control */
+.bld__lens {
+  display: flex;
+  margin-top: 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(95, 230, 255, 0.15);
+}
+.bld__lens-opt {
+  flex: 1;
+  padding: 6px 0;
+  background: rgba(95, 230, 255, 0.05);
+  border: 0;
+  color: var(--ice);
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.bld__lens-opt + .bld__lens-opt {
+  border-left: 1px solid var(--line-strong);
+}
+.bld__lens-opt:hover {
+  color: #fff;
+  background: rgba(31, 96, 192, 0.3);
+}
+.bld__lens-opt.is-on {
+  color: #fff;
+  background: rgba(31, 96, 192, 0.55);
+  text-shadow: 0 0 8px rgba(95, 230, 255, 0.7);
+}
+
+/* Project control: six levers */
+.pc__lever {
+  padding: 3px 0 4px;
+  border-bottom: 1px solid rgba(95, 230, 255, 0.06);
+}
+.pc__lever-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px auto;
+  align-items: center;
+  gap: 8px;
+}
+.pc__lever-name {
+  display: flex;
+  min-width: 0;
+  overflow: hidden;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ice);
+  white-space: nowrap;
+}
+.pc__lever-by {
+  font-size: 0.56rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+.pc__lever-viz {
+  display: flex;
+  align-items: center;
+}
+.pc__lever-v {
+  font-size: 0.8rem;
+  color: #fff;
+  text-align: right;
+  white-space: nowrap;
+}
+.pc__lever-unit {
+  font-size: 0.62rem;
+  color: var(--dim);
+}
+.pc__lever-sub {
+  font-size: 0.7rem;
+  line-height: 1.25;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pc__lever-rec {
+  margin-top: 2px;
+  font-size: 0.7rem;
+  line-height: 1.25;
+  color: var(--ice);
+}
+.pc__rec-tag {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 0 4px;
+  font-size: 0.54rem;
+  letter-spacing: 0.08em;
+  color: var(--ok);
+  border: 1px solid rgba(95, 255, 192, 0.45);
+  border-radius: 2px;
+  vertical-align: 1px;
+}
+.pc__lever.is-warn .pc__lever-v {
+  color: var(--amber);
+}
+.pc__bar,
+.pc__hire,
+.pc__stack {
+  display: flex;
+  width: 56px;
+  height: 5px;
+  background: rgba(95, 230, 255, 0.1);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.pc__bar > span,
+.pc__hire-w,
+.pc__stack-w {
+  display: block;
+  height: 100%;
+  background: var(--cyan);
+  box-shadow: 0 0 6px rgba(95, 230, 255, 0.7);
+}
+.pc__hire {
+  background: rgba(255, 179, 71, 0.35);
+}
+.pc__stack-i {
+  display: block;
+  height: 100%;
+  background: #2f7dff;
+}
+.pc__stack-p {
+  display: block;
+  height: 100%;
+  background: rgba(95, 230, 255, 0.18);
+}
+.pc__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--ice);
+}
+.pc__basis {
+  margin: -2px 0 3px;
+  font-size: 0.66rem;
+  color: var(--dim);
+}
+.pc__src {
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+.pc__empty {
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+/* Progress & cost */
+.pc__stats {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.pc__stats > div {
+  display: flex;
+  flex-direction: column;
+}
+.pc__stat-k {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.pc__stat-v {
+  font-size: 1.3rem;
+  color: #fff;
+}
+.pc__stats .is-warn .pc__stat-v {
+  color: var(--amber);
+}
+.pc__curve {
+  display: block;
+}
+.pc__grid {
+  stroke: rgba(95, 230, 255, 0.1);
+}
+.pc__axis {
+  font-family: var(--mono);
+  font-size: 8px;
+  fill: var(--dim);
+}
+.pc__planned {
+  fill: none;
+  stroke: var(--dim);
+  stroke-width: 1.4;
+  stroke-dasharray: 4 3;
+}
+.pc__measured {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 3px rgba(95, 230, 255, 0.8));
+}
+.pc__now {
+  stroke: rgba(207, 239, 255, 0.35);
+  stroke-dasharray: 2 2;
+}
+.pc__dot {
+  fill: var(--cyan);
+}
+.pc__dot.is-warn {
+  fill: var(--amber);
+}
+.pc__flag {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  fill: var(--ice);
+}
+.pc__flag.is-warn {
+  fill: var(--amber);
+}
+.pc__legend {
+  display: flex;
+  gap: 12px;
+  font-size: 0.66rem;
+  color: var(--dim);
+}
+.pc__legend-planned::before,
+.pc__legend-measured::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  margin-right: 5px;
+  vertical-align: 3px;
+  border-top: 1.5px dashed var(--dim);
+}
+.pc__legend-measured::before {
+  border-top: 2px solid var(--cyan);
+}
+.pc__cost {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 5px 0;
+  border-top: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--ice);
+}
+.pc__cost .mono {
+  font-size: 0.74rem;
+  color: #fff;
+}
+.pc__save-row {
+  display: grid;
+  grid-template-columns: 116px 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 0;
+  border-bottom: 1px solid rgba(95, 230, 255, 0.06);
+}
+.pc__save-lever {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ice);
+}
+.pc__save-basis {
+  font-size: 0.68rem;
+  color: var(--dim);
+}
+.pc__save-v {
+  font-size: 0.76rem;
+  color: #fff;
+  text-align: right;
+}
+.pc__save-total {
+  border-bottom: 0;
+  border-top: 1px solid var(--line);
+  margin-top: 2px;
+}
+.pc__save-total .pc__save-lever,
+.pc__save-total .pc__save-v {
+  color: var(--ok);
+}
+.pc__note {
+  margin-top: 4px;
+  font-size: 0.66rem;
+  line-height: 1.3;
+  color: var(--dim);
+}
+.pc__record {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--ice);
 }

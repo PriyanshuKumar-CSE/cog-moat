@@ -52,6 +52,17 @@ A crack gauge drifting past its limit raises an inspection work order through th
 Click any milestone in the Building panel to jump to it.
 Stage copy, checks and simulated figures live in `src/scenes/building/stages.ts`; specs in `src/sim/completionSpecs.ts`.
 
+The Building panel switches between two views.
+**Quality & sign-off** is the milestone cycle above.
+**Project control** follows Cognecto's Project Control brochure: the six control levers measured on the same tower.
+Worker productivity (working vs idle by crew), attendance (head-count by the hour against the muster roll), machinery uptime (working, idle, parked), rental equipment (hire hours billed vs seen working), material and haulage (every truck trip logged at the gate camera), and progress and cost (plan vs measured S-curve, slippage in days, cost per unit against the BOQ rate).
+On site, crews, the excavator, tower crane, hoist, gondola and trucks are tagged with what Vision AI sees; the quality overlays step aside.
+Hire hours queried by Cortex also appear on the approval card and the milestone certificate before the RA bill is released.
+A site clock plays a working day (08:00 to 18:00) in 50 s.
+During autoplay the view switches to Project control part way through the Building stop (`buildingControlAt` in `src/config/tour.ts`).
+Simulated site figures live in `src/scenes/building/control.ts`.
+Figures from Cognecto's live screens (23% productive share, 31h 26m idle, 336 min machine time, ₹82 Cr BOQ verified, 0.02 s per frame, 27 models) and the savings reference table live in `src/config/content.ts`; each is labelled LIVE SITE or ON RECORD and can be hidden from the presenter panel.
+
 ## Guardrails
 
 - Every action passes a human approval card.

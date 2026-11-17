@@ -5,6 +5,7 @@ import { Ledger, type LedgerBlock } from '../../sim/ledger'
 import type { HumanAction, ReasonCode } from '../../sim/loopCase'
 import { createRng } from '../../sim/rng'
 import { createBuildingCase, createBuildingDecision, type BuildingCase } from './buildingCase'
+import { queriedHours, sitePlan } from './control'
 import { MONITORING, stageIndex, stages } from './stages'
 import { FIRST_STAGE, RELEASE_AT, SEAL_AT, phaseSeconds, scanU, type Phase } from './timing'
 
@@ -36,6 +37,8 @@ export interface BuildingCertificate {
   result: 'verified'
   checks: { check: string; value: string; plan: string; ok: boolean }[]
   snags_logged: { observation_id: string; class: string; location: string; vlm_confirmed: boolean }[]
+  /** Hire hours billed for the milestone, checked against hours Vision AI saw the machine working. */
+  hire_check: { machine: string; billed_h: number; worked_h: number; queried_h: number } | null
   settles: string
   evidence: { observation_id: string; hash: string }[]
   approved_by_role: string
@@ -107,6 +110,13 @@ function evidenceOf(c: BuildingCase, d: Decision) {
   }))
 }
 
+function hireCheck(stage: number) {
+  const p = sitePlan(stage)
+  if (!p) return null
+  const { machine, billed_h, worked_h } = p.hire
+  return { machine: machine.toLowerCase(), billed_h, worked_h, queried_h: queriedHours(p.hire) }
+}
+
 function buildPayload(c: BuildingCase, d: Decision, at: Date): BuildingPayload {
   const observations = evidenceOf(c, d)
   const accepted = d.action === 'accept'
@@ -119,6 +129,7 @@ function buildPayload(c: BuildingCase, d: Decision, at: Date): BuildingPayload {
           result: 'verified',
           checks: c.measures.map((m) => ({ check: m.label, value: m.value, plan: m.plan, ok: m.ok })),
           snags_logged: c.findings.map((f, i) => ({ observation_id: f.id, class: f.cls.toLowerCase(), location: f.where, vlm_confirmed: i === c.vlmIndex })),
+          hire_check: hireCheck(c.index),
           settles: c.spec.settles,
           evidence: observations,
           approved_by_role: c.approverRole,
